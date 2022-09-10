@@ -49,7 +49,10 @@ async function login(req, res) {
     
     const userAuth = await UsersModel.findOne({ email })
 
-    if(!userAuth) res.status(422).json({ message: 'usuario não encontrado!' })
+    if(!userAuth) res.status(404).json({ message: 'usuario não encontrado!' })
+
+    const checkPassword = await Encript.ComparePass(userAuth.password, password)
+    if(!checkPassword) res.status(401).json({ message: 'senha invalida' })
 
     res.send({ message: 'login realizado'})
 }   
