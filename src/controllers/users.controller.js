@@ -32,8 +32,12 @@ async function createUser(req, res) {
         password: hashingPass,
     })
 
-    user.save()
+    const userExsts = await UsersModel.findOne({ email })
 
+    if(userExsts) res.status(422).json({ message: 'Usuário já existe' })
+    else user.save()
+    
+    
     res.send({ message: 'success', user })
 }
 
