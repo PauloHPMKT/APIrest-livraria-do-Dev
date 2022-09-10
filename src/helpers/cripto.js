@@ -5,7 +5,11 @@ class Encript {
         const salt = await bcrypt.genSalt()
         return await bcrypt.hash(password, salt)
     }
-}
+
+    static async ComparePass(userPassword, password) {
+        return await bcrypt.compare(userPassword, password)
+    }
+}   
 
 module.exports = {
     Encript,
