@@ -23,7 +23,7 @@ async function createUser(req, res) {
         password,
     } = req.body
 
-    const user = new UsersModel({
+    const user = await new UsersModel({
         name,
         email,
         password,
@@ -31,7 +31,7 @@ async function createUser(req, res) {
 
     user.save()
 
-    res.send({ message: 'success' })
+    res.send({ message: 'success', user })
 }
 
 async function updateUser(req, res) {
