@@ -1,3 +1,4 @@
+const { Encript } = require('../helpers/cripto')
 const UsersModel = require('../models/users.model')
 
 async function getUsers(req, res) {
@@ -23,10 +24,12 @@ async function createUser(req, res) {
         password,
     } = req.body
 
-    const user = await new UsersModel({
+    const hashingPass = await Encript.CriptPassword(password)
+
+    const user = new UsersModel({
         name,
         email,
-        password,
+        password: hashingPass,
     })
 
     user.save()
