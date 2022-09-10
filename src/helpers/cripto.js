@@ -1,6 +1,6 @@
-import * as bcrypt from 'bcrypt'
+const bcrypt = require('bcrypt')
 
-export class Encript {
+class Encript {
     static async CriptPassword(password) {
         const salt = await bcrypt.genSalt()
         return await bcrypt.hash(password, salt)
