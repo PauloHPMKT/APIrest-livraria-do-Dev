@@ -41,6 +41,19 @@ async function createUser(req, res) {
     res.send({ message: 'success', user })
 }
 
+async function login(req, res) {
+    const { email, password } = req.body
+    
+    if(!email) res.status(401).json({ message: 'Digite um email válido' })
+    if(!password) res.status(401).json({ message: 'Digite uma senha válida' })
+    
+    const userAuth = await UsersModel.findOne({ email })
+
+    if(!userAuth) res.status(422).json({ message: 'usuario não encontrado!' })
+
+    res.send({ message: 'login realizado'})
+}   
+
 async function updateUser(req, res) {
     const { id } = req.params
 
@@ -64,6 +77,7 @@ module.exports = {
     getUsers,
     getUserByName,
     createUser,
+    login,
     updateUser,
     removeUser,
 }
