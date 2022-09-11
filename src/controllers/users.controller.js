@@ -1,5 +1,7 @@
 const { Encript } = require('../helpers/cripto')
 const UsersModel = require('../models/users.model')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 async function getUsers(req, res) {
     const { id } = req.params
@@ -49,12 +51,33 @@ async function login(req, res) {
     
     const userAuth = await UsersModel.findOne({ email })
 
+    console.log(userAuth)
+
     if(!userAuth) res.status(404).json({ message: 'usuario não encontrado!' })
 
-    const checkPassword = await Encript.ComparePass(userAuth.password, password)
+    const checkPassword = await Encript.ComparePass(password, userAuth.password)
+    
     if(!checkPassword) res.status(401).json({ message: 'senha invalida' })
 
-    res.send({ message: 'login realizado'})
+    try{
+        const secret = process.env.SECRET_KEY
+
+        const token = jwt.sign(
+            {
+                id: userAuth._id,
+                name: userAuth.name,
+                email: userAuth.email,
+            },
+            secret,
+        )
+
+        res.send({ message: 'login realizado', token })
+
+    } catch(err) {
+        console.error(err)
+        res.status(500).json({ message: '500 server error' })
+    }
+
 }   
 
 async function updateUser(req, res) {
