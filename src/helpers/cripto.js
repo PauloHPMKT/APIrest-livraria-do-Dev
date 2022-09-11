@@ -6,8 +6,8 @@ class Encript {
         return await bcrypt.hash(password, salt)
     }
 
-    static async ComparePass(userPassword, password) {
-        return await bcrypt.compare(userPassword, password)
+    static async ComparePass(password, userPassword) {
+        return await bcrypt.compare(password, userPassword)
     }
 }   
 
