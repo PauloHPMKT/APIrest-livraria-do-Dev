@@ -8,7 +8,9 @@ router.get('/usuarios/GET/:id?', UsersController.getUsers)
 router.get('/usuarios/busca/GET', UsersController.getUserByName)
 router.post('/usuarios/POST', UsersController.createUser)
 router.post('/usuarios/auth', UsersController.login)
-router.put('/usuarios/PUT/:id', UsersController.updateUser)
 router.delete('/usuarios/DELETE/:id', UsersController.removeUser)
+
+//rota provada para teste
+router.put('/usuarios/PUT/:id', UsersController.checkToker, UsersController.updateUser)
 
 module.exports = router
