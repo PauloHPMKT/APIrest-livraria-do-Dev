@@ -1,7 +1,6 @@
 const { Encript } = require('../helpers/cripto')
 const UsersModel = require('../models/users.model')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
 
 async function getUsers(req, res) {
     const { id } = req.params
@@ -78,28 +77,6 @@ async function login(req, res) {
 
 }   
 
-//separar funcao em um middleware
-function checkToker(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(" ")[1]
-
-    if(!token) {
-        return res.status(401).json({ message: 'acesso negado' })
-    }
-
-    try {
-        const secret = process.env.SECRET_KEY
-        jwt.verify(token, secret)
-
-        next()
-
-    } catch (error) {
-        res.status(400).json({ message: 'token invalido' })
-    }
-    
-    res.send({ message: 'acesso permitido' })
-}
-
 async function updateUser(req, res) {
     const { id } = req.params
 
@@ -126,5 +103,4 @@ module.exports = {
     login,
     updateUser,
     removeUser,
-    checkToker,
 }
