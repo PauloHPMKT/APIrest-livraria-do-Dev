@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const UsersController = require('../controllers/users.controller')
+const jwt = require('../middlewares/auth-middleware')
 
 router.get('/', (req, res) => {res.send({ message: 'rendizando diretor do arquivo routes' })})
 
@@ -11,6 +12,6 @@ router.post('/usuarios/auth', UsersController.login)
 router.delete('/usuarios/DELETE/:id', UsersController.removeUser)
 
 //rota provada para teste
-router.put('/usuarios/PUT/:id', UsersController.checkToker, UsersController.updateUser)
+router.put('/usuarios/PUT/:id', jwt.authMiddleware, UsersController.updateUser)
 
 module.exports = router
