@@ -79,7 +79,11 @@ async function login(req, res) {
         
         SessionsModel.create(session)
 
-        res.send({ message: 'login realizado', token })
+        res.status(200).send({ 
+            userAuth,
+            password: userAuth.password = undefined, 
+            token 
+        })
 
 
     } catch(err) {
