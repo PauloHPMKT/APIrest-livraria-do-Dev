@@ -68,7 +68,17 @@ async function login(req, res) {
             secret,
         )
 
+        /*const session = {
+            token,
+            user_key: userAuth.email,
+        }
+
+        if(session.user_key === email) this.UsersModel.remove({ user_key: session.user_key }).exec()
+
+        this.UsersModel.save(session)*/
+
         res.send({ message: 'login realizado', token })
+
 
     } catch(err) {
         console.error(err)
