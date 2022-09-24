@@ -1,6 +1,7 @@
 const { Encript } = require('../helpers/cripto')
 const UsersModel = require('../models/users.model')
 const jwt = require('jsonwebtoken')
+const SessionsModel = require('../models/session.model')
 
 async function getUsers(req, res) {
     const { id } = req.params
@@ -68,14 +69,15 @@ async function login(req, res) {
             secret,
         )
 
-        /*const session = {
-            token,
-            user_key: userAuth.email,
+        //create a collection pesisting token + userKey
+        const session = {
+            userKey: userAuth.email,
+            jwt: token,
         }
 
-        if(session.user_key === email) this.UsersModel.remove({ user_key: session.user_key }).exec()
-
-        this.UsersModel.save(session)*/
+        if (session.userKey === email) SessionsModel.deleteOne({ userKey: session.userKey }).exec()
+        
+        SessionsModel.create(session)
 
         res.send({ message: 'login realizado', token })
 
