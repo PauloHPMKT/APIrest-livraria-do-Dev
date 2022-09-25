@@ -1,7 +1,7 @@
 const { Encript } = require('../helpers/cripto')
 const UsersModel = require('../models/users.model')
-const jwt = require('jsonwebtoken')
 const SessionsModel = require('../models/session.model')
+const jwt = require('jsonwebtoken')
 
 async function getUsers(req, res) {
     const { id } = req.params
