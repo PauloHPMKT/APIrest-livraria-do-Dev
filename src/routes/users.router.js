@@ -11,7 +11,7 @@ router.post('/usuarios', UsersController.createUser)
 router.post('/usuariosauth', UsersController.login)
 router.delete('/usuarios/:id', UsersController.removeUser)
 
-//rota provada para teste
-router.put('/usuarios/PUT/:id', jwt.authMiddleware, UsersController.updateUser)
+//rota provada para teste lembrar de bloquear rota com middleware
+router.patch('/usuarios/:id', UsersController.updateUser)
 
 module.exports = router

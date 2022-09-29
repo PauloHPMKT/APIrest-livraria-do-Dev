@@ -100,7 +100,7 @@ async function updateUser(req, res) {
         { _id: id }, req.body, { new: true }
     )
 
-    res.send({ message: 'livro atualizado', user })
+    res.send({ message: 'usuario atualizado', user })
 }
 
 async function removeUser(req, res) {
