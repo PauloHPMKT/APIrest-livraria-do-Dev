@@ -40,7 +40,7 @@ async function createUser(req, res) {
     else user.save()
     
     
-    res.send({ message: 'success', user })
+    res.status(201).send({ message: 'success', user })
 }
 
 async function login(req, res) {
