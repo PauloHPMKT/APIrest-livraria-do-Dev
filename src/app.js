@@ -1,8 +1,10 @@
 require('dotenv').config()
 const express = require('express')
-const db = require('./db')
-const cors = require('cors')
 const app = express()
+const cors = require('cors')
+const morgan = require('morgan')
+
+const db = require('./db')
 
 //routers imports
 const booksRouter = require('./routes/books.router')
@@ -13,6 +15,9 @@ const sessionsRouter = require('./routes/sessions.router')
 
 //db connection
 db.dbConnect()
+
+//set morgan
+app.use(morgan('dev'))
 
 //set api
 app.use(express.urlencoded({ extended: true }))
