@@ -5,7 +5,6 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 const db = require('./db')
-
 //routers imports
 const booksRouter = require('./routes/books.router')
 const authorsRouter = require('./routes/authors.router')
