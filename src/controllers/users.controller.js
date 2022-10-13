@@ -34,7 +34,7 @@ async function createUser(req, res) {
         email,
         password: hashingPass,
     })
-
+    
     if (!user.name) {
         res.status(httpStatusCode.BAD_REQUEST).json({ message: throwNewError.EMPTY_FIELD_NAME.message })
         return user
