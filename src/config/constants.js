@@ -24,9 +24,12 @@ module.exports = {
     ENTITY_NOT_FOUND: { name: 'EMTITY_NOT_FOUND', code: 422, message: 'Usuário não encontrado' },
     INVALID_PASSWORD: { name: 'INVALID_PASSWORD', code: 401, message: 'Dados incorretos' },
     //server error
-    SEVERAL_INTERAL_SERVER_ERROR: { name: 'SEVERAL_INTERAL_SERVER_ERROR', code: 500, message: 'Critical server error' }
+    SEVERAL_INTERAL_SERVER_ERROR: { name: 'SEVERAL_INTERAL_SERVER_ERROR', code: 500, message: 'Critical server error' },
+    ACCESS_DENIED: { name: 'ACCESS_DENIED', code: 401, message: 'Accesso negado' },
+    INVALID_TOKEN: { name: 'INVALID_TOKEN', code: 401, message: 'Token invalido' },
   },
   successStatus: {
+    FREE_ACCESS: { name: 'FREE_ACCESS', code: 200, message: 'Acesso liberado' },
     CREATED: { name: 'CREATED', code: 201, message: 'registro criado com sucesso!' }
   }
 }

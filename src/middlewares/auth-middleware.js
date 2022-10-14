@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
+const { httpStatusCode, throwNewError, successStatus } = require('../config/constants')
 
 function authMiddleware(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(" ")[1]
 
     if(!token) {
-        return res.status(401).json({ message: 'acesso negado' })
+        return res.status(httpStatusCode.UNAUTHORIZED).json({ message: throwNewError.ACCESS_DENIED.message })
     }
 
     try {
@@ -15,10 +16,10 @@ function authMiddleware(req, res, next) {
         next()
 
     } catch (error) {
-        res.status(400).json({ message: 'token invalido' })
+        res.status(httpStatusCode.UNAUTHORIZED).json({ message: throwNewError.INVALID_TOKEN.message })
     }
     
-    res.send({ message: 'acesso permitido' })
+    res.status(httpStatusCode.OK).json({ message: successStatus.FREE_ACCESS.message })
 }
 
 module.exports = {
