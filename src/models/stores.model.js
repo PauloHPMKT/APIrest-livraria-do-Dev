@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
-  store_id: Number,
+  store_id: { type: Number, unique: true },
   name: String,
   location: {
     address: {
