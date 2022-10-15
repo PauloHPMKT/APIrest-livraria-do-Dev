@@ -10,6 +10,7 @@ const booksRouter = require('./routes/books.router')
 const authorsRouter = require('./routes/authors.router')
 const usersRouter = require('./routes/users.router')
 const sessionsRouter = require('./routes/sessions.router')
+const storesRouter = require('./routes/store.router')
 
 //db connection
 db.dbConnect()
@@ -27,6 +28,7 @@ app.use('/api', booksRouter)
 app.use('/api', authorsRouter)
 app.use('/api', usersRouter)
 app.use('/api', sessionsRouter)
+app.use('/api', storesRouter)
 
 
 module.exports = app
