@@ -1,3 +1,4 @@
+const { throwNewError, httpStatusCode, successStatus } = require('../config/constants')
 const BooksModel = require('../models/books.model')
 
 async function getBooks(req, res) {
@@ -20,23 +21,16 @@ async function getBooksById(req, res) {
 }
 
 async function createBooks(req, res) {
-    const {
-        titulo,
-        autor,
-        editora,
-        preco,
-    } = req.body
 
-    const book = new BooksModel({
-        titulo,
-        autor,
-        editora,
-        preco
-    })
+    const {...data} = req.body
+
+    const book = new BooksModel({ ...data })
+
+    console.log(book)
 
     book.save()
 
-    res.send({ message: 'success' })
+    res.json({ data })
 }
 
 async function updateBook(req, res) {
