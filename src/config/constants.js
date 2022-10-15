@@ -12,6 +12,7 @@ module.exports = {
     BAD_GATEWAY: 502,
   },  
   throwNewError: {
+    DUPLICATED_UNIQUE_KEY: { name: 'DUPLICATED_UNIQUE_KEY', code: 409, message: 'Conflito de chave única duplicada' },
     DUPLICATED_EMAIL: { name: 'DUPLICATE_EMAIL', code: 409, message: 'E-mail já cadastrado!' },
     //forms field
     EMPTY_FIELD_NAME: { name: 'EMPTY_FIELD_NAME', code: 400, message: 'Campo de Nome está vazio!' },
