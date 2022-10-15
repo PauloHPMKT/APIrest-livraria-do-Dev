@@ -10,7 +10,6 @@ const booksRouter = require('./routes/books.router')
 const authorsRouter = require('./routes/authors.router')
 const usersRouter = require('./routes/users.router')
 const sessionsRouter = require('./routes/sessions.router')
-//api instances
 
 //db connection
 db.dbConnect()

@@ -5,7 +5,6 @@ const schema = new mongoose.Schema({
     autor: { type: mongoose.Schema.Types.ObjectId, ref: 'authors' }, //fazendo referencia de uma outra collection
     editora: String,
     genero: String,
-    preco: Number,
     createAt: { type: Date, default: Date.now() }
 })
 
