@@ -11,8 +11,8 @@ const schema = new mongoose.Schema({
       zipcode: String,
     },
     geo: {
-      type: String,
-      coordinates: [],
+      geo_type: String,
+      coordinates: [Number],
     },
   },
   createdAt: { type: Date, default: Date.now() }
