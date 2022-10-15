@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
     cod: { type: Number, unique: true },
     title: String,
     poster: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'authors' }, //fazendo referencia de uma outra collection
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'authors' },
     publishing: String,
     plot: String,
     full_plot: String, 
