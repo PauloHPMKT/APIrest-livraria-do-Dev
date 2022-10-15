@@ -21,16 +21,25 @@ async function getBooksById(req, res) {
 }
 
 async function createBooks(req, res) {
-
     const {...data} = req.body
 
     const book = new BooksModel({ ...data })
 
-    console.log(book)
+    const bookExists = await BooksModel.findOne(data)
 
-    book.save()
-
-    res.json({ data })
+    if (bookExists) {
+        res
+            .status(httpStatusCode.CONFLICT)
+            .json({ error: throwNewError.DUPLICATED_UNIQUE_KEY.message })
+        return bookExists
+    } else {
+        return {
+            new_book: book.save(),
+            status: res
+                .status(httpStatusCode.CREATED)
+                .json({ book, message: successStatus.CREATED.message })
+        }
+    }   
 }
 
 async function updateBook(req, res) {
