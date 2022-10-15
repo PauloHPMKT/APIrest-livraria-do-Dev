@@ -172,4 +172,4 @@ module.exports = {
   login,
   updateUser,
   removeUser,
-};
+}
