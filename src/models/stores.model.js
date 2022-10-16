@@ -18,6 +18,6 @@ const schema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() }
 })
 
-const StoresModel = mongoose.model('store', schema)
+const StoresModel = mongoose.model('stores', schema)
 
 module.exports = StoresModel
