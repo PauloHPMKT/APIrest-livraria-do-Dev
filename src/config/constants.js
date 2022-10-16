@@ -12,6 +12,7 @@ module.exports = {
     BAD_GATEWAY: 502,
   },  
   throwNewError: {
+    REQUEST_FAILED: { name: 'REQUEST_FAILED', code: 400, message: 'Falha de consulta' },
     DUPLICATED_UNIQUE_KEY: { name: 'DUPLICATED_UNIQUE_KEY', code: 409, message: 'Conflito de chave única duplicada' },
     DUPLICATED_EMAIL: { name: 'DUPLICATE_EMAIL', code: 409, message: 'E-mail já cadastrado!' },
     //forms field
