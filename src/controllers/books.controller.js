@@ -3,7 +3,7 @@ const BooksModel = require('../models/books.model')
 
 async function getBooks(req, res) {
   await BooksModel.find()
-    .populate('autor')
+    .populate('author')
     .exec((err, books) => {
     res.status(200).json(books)
   })
@@ -13,7 +13,7 @@ async function getBooksById(req, res) {
   const { id } = req.params
 
   await BooksModel.findById(id)
-    .populate('autor', 'name')
+    .populate('author', 'name') // popula os dados apenas pelo nome
     .exec((err, livros) => {
       if (err) res.status(400).send({ message: `${err.message}` })
       else res.status(200).send(livros)
