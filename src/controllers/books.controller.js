@@ -5,7 +5,9 @@ async function getBooks(req, res) {
   await BooksModel.find()
     .populate('author')
     .exec((err, books) => {
-    res.status(200).json(books)
+    
+      if (err) res.status(httpStatusCode.BAD_REQUEST).json({ message: throwNewError.REQUEST_FAILED.message })
+      else res.status(httpStatusCode.OK).json(books)
   })
 }
 
@@ -14,9 +16,10 @@ async function getBooksById(req, res) {
 
   await BooksModel.findById(id)
     .populate('author', 'name') // popula os dados apenas pelo nome
-    .exec((err, livros) => {
-      if (err) res.status(400).send({ message: `${err.message}` })
-      else res.status(200).send(livros)
+    .exec((err, book) => {
+
+      if (err) res.status(httpStatusCode.BAD_REQUEST).json({ message: throwNewError.REQUEST_FAILED.message})
+      else res.status(httpStatusCode.OK).send(book)
     })
 }
 
