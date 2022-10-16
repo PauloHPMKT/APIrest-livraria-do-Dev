@@ -3,8 +3,8 @@ const BooksController = require('../controllers/books.controller')
 
 router.get('/', (req, res) => {res.send({ message: 'rendizando diretor do arquivo routes' })})
 
-router.get('/livros/GET/', BooksController.getBooks)
-router.get('/livros/GET/:id?', BooksController.getBooksById)
+router.get('/books/', BooksController.getBooks)
+router.get('/books/:id?', BooksController.getBooksById)
 //caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
 router.get('/livros/busca/GET', BooksController.listBooksByPublishing)
 router.post('/books/register', BooksController.createBooks)
