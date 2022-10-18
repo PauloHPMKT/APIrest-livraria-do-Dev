@@ -8,7 +8,7 @@ router.get('/books/:id?', BooksController.getBooksById)
 //caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
 router.get('/livros/busca/GET', BooksController.listBooksByPublishing)
 router.post('/books/register', BooksController.createBooks)
-router.put('/livros/PUT/:id', BooksController.updateBook)
+router.put('/books/:id', BooksController.updateBook)
 router.delete('/livros/DELETE/:id', BooksController.removeBook)
 
 module.exports = router

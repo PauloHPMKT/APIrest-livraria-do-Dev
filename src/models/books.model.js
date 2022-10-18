@@ -12,6 +12,7 @@ const schema = new mongoose.Schema({
     language: String,
     year: Number,
     pages_number: Number,
+    technical: Object,
     createdAt: { type: Date, default: Date.now() }
 })
 
