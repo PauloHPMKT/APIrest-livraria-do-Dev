@@ -7,7 +7,7 @@ router.get('/', (req, res) => {res.send({ message: 'rendizando diretor do arquiv
 router.get('/usuarios:id?', UsersController.getUsers)
 //caminho de busca por query: http://localhost:3000/api/livros/busca?editora=Buzz
 router.get('/usuarios/busca', UsersController.getUserByName)
-router.post('/usuarios', UsersController.createUser)
+router.post('/user/register', UsersController.createUser)
 router.post('/usuariosauth', UsersController.login)
 router.delete('/usuarios/:id', UsersController.removeUser)
 

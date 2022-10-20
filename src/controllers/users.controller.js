@@ -66,7 +66,7 @@ async function createUser(req, res) {
       user: user.save(),
       status: res
         .status(httpStatusCode.CREATED)
-        .json({ message: successStatus.CREATED.message }),
+        .json({ message: successStatus.CREATED.message, user }),
     };
   }
 }
