@@ -14,6 +14,7 @@ const authorsRouter = require("./routes/authors.router");
 const usersRouter = require("./routes/users.router");
 const sessionsRouter = require("./routes/sessions.router");
 const storesRouter = require("./routes/store.router");
+const uploadRouter = require("./routes/upload.router");
 
 //db connection
 db.dbConnect();
@@ -45,5 +46,6 @@ app.use("/api", authorsRouter);
 app.use("/api", usersRouter);
 app.use("/api", sessionsRouter);
 app.use("/api", storesRouter);
+app.use("/api", uploadRouter);
 
 module.exports = app;

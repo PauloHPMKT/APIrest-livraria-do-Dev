@@ -1,7 +1,6 @@
-const router = require('express').Router()
-const StoreController = require('../controllers/stores.controller')
+const router = require("./index");
+const StoreController = require("../controllers/stores.controller");
 
+router.post("/store/register", StoreController.createStore);
 
-router.post('/store/register', StoreController.createStore)
-
-module.exports = router
+module.exports = router;
