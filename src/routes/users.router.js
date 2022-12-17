@@ -1,6 +1,6 @@
 const router = require("./index");
 const UsersController = require("../controllers/users.controller");
-const jwt = require("../middlewares/auth-middleware");
+const jwtAuthentication = require("../middlewares/auth-middleware");
 
 router.get("/", (req, res) => {
 	res.send({ message: "rendizando diretor do arquivo routes" });

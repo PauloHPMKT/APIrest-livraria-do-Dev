@@ -14,7 +14,6 @@ const authorsRouter = require("./routes/authors.router");
 const usersRouter = require("./routes/users.router");
 const sessionsRouter = require("./routes/sessions.router");
 const storesRouter = require("./routes/store.router");
-const uploadRouter = require("./routes/upload.router");
 
 //db connection
 db.dbConnect();
@@ -23,7 +22,10 @@ db.dbConnect();
 app.use(morgan("dev"));
 
 //set api
-app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
+app.use(
+	"/uploads",
+	express.static(path.resolve(__dirname, "../..", "uploads"))
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -46,6 +48,5 @@ app.use("/api", authorsRouter);
 app.use("/api", usersRouter);
 app.use("/api", sessionsRouter);
 app.use("/api", storesRouter);
-app.use("/api", uploadRouter);
 
 module.exports = app;
