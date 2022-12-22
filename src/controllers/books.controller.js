@@ -32,7 +32,17 @@ async function getBooksById(req, res) {
 }
 
 async function createBooks(req, res) {
-	console.log(req.file);
+	const poster = req.file?.filename;
+
+	const { ...data } = req.body;
+
+	const book = await BooksModel.create({
+		...data,
+		poster,
+		technical: data.technical ? JSON.parse(data.technical) : {},
+	});
+
+	res.json({ book });
 	/*const { ...data } = req.body;
 
 	const book = new BooksModel({ ...data });
