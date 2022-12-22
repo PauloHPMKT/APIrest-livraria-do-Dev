@@ -1,20 +1,19 @@
 const router = require("./index");
-const BooksController = require("../controllers/books.controller");
-const uploadFile = require("../middlewares/upload-middleware");
+const {
+	getBooks,
+	getBooksById,
+	listBooksByPublishing,
+	createBooks,
+	updateBook,
+	removeBook,
+} = require("../controllers/books.controller");
+const upload = require("../middlewares/upload-middleware");
 
-router.get("/", (req, res) => {
-	res.send({ message: "rendizando diretor do arquivo routes" });
-});
-
-router.get("/books", BooksController.getBooks);
-router.get("/books/:id?", BooksController.getBooksById);
-router.get("/books/search", BooksController.listBooksByPublishing); //caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
-router.post(
-	"/books/create",
-	uploadFile.single("poster"),
-	BooksController.createBooks
-);
-router.put("/books/:id", BooksController.updateBook);
-router.delete("/books/:id", BooksController.removeBook);
+router.get("/books", getBooks);
+router.get("/books/:id?", getBooksById);
+router.get("/books/search", listBooksByPublishing); //caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
+router.post("/books/create", upload.single("image"), createBooks);
+router.put("/books/:id", updateBook);
+router.delete("/books/:id", removeBook);
 
 module.exports = router;
