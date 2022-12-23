@@ -33,8 +33,15 @@ async function getBooksById(req, res) {
 
 async function createBooks(req, res) {
 	const poster = req.file?.filename;
-
 	const { ...data } = req.body;
+
+	const bookExists = await BooksModel.findOne({ data: data._id });
+
+	if (bookExists) {
+		return res
+			.status(httpStatusCode.CONFLICT)
+			.json({ error: throwNewError.DUPLICATED_UNIQUE_KEY.message });
+	}
 
 	const book = await BooksModel.create({
 		...data,
@@ -42,77 +49,9 @@ async function createBooks(req, res) {
 		technical: data.technical ? JSON.parse(data.technical) : {},
 	});
 
-	res.json({ book });
-	/*const { ...data } = req.body;
-
-	const book = new BooksModel({ ...data });
-
-	const bookExists = await BooksModel.findOne(data);
-
-	if (bookExists) {
-		res
-			.status(httpStatusCode.CONFLICT)
-			.json({ error: throwNewError.DUPLICATED_UNIQUE_KEY.message });
-		return bookExists;
-	} else {
-		return {
-			new_book: book.save(),
-			status: res
-				.status(httpStatusCode.CREATED)
-				.json({ book, message: successStatus.CREATED.message }),
-		};
-	}*/
-	/*try {
-		//const poster = request.file?.filename;
-		const {
-			cod,
-			title,
-			author,
-			publishing,
-			plot,
-			full_plot,
-			genres,
-			language,
-			year,
-			pages_number,
-			technical,
-		} = req.body;
-
-		const book = await BooksModel.create({
-			cod,
-			title,
-			poster,
-			author,
-			publishing,
-			plot,
-			full_plot,
-			genres,
-			language,
-			year,
-			pages_number,
-			technical: technical ? JSON.parse(technical) : {},
-		});
-		res
-			.status(httpStatusCode.CREATED)
-			.json({ book, message: successStatus.CREATED.message });
-	} catch (error) {
-		const bookExists = await BooksModel.findOne(this.book);
-		if (bookExists) {
-			res
-				.status(httpStatusCode.CONFLICT)
-				.json({ error: throwNewError.DUPLICATED_UNIQUE_KEY.message });
-			return bookExists;
-		}
-	}
-
-	} else {
-		return {
-			//new_book: book.save(),
-			status: res
-				.status(httpStatusCode.CREATED)
-				.json({ book, message: successStatus.CREATED.message }),
-		};
-	}*/
+	return res
+		.status(httpStatusCode.CREATED)
+		.json({ book, message: successStatus.CREATED.message });
 }
 
 async function updateBook(req, res) {
