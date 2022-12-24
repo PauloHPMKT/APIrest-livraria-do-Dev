@@ -10,7 +10,7 @@ function getBooks(req, res) {
 	const bookId = id ? { _id: id } : null;
 
 	BooksModel.find(bookId)
-		.populate("author")
+		.populate("author", "name")
 		.exec((err, books) => {
 			if (err) {
 				res
