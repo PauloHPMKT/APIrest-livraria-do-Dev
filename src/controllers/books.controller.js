@@ -3,14 +3,14 @@ const {
 	httpStatusCode,
 	successStatus,
 } = require("../config/constants");
-const BooksModel = require("../models/books.model");
+const { BooksModel, UploadPosterModel } = require("../models/books.model");
 
 function getBooks(req, res) {
 	const { id } = req.params;
 	const bookId = id ? { _id: id } : null;
 
 	BooksModel.find(bookId)
-		.populate("author", "name")
+		.populate("author poster", "name poster")
 		.exec((err, books) => {
 			if (err) {
 				res
@@ -38,37 +38,60 @@ async function getBooksById(req, res) {
 		});
 }*/
 
+//tentar resolver o bug da chave duplicada
 async function createBooks(req, res) {
-	const poster = req.file?.filename;
 	const { ...data } = req.body;
 
-	const bookExists = await BooksModel.findOne({ data: data._id });
+	const bookExists = await BooksModel.findOne(data);
+
+	console.log(bookExists);
 
 	if (bookExists) {
-		return res
+		res
 			.status(httpStatusCode.CONFLICT)
 			.json({ error: throwNewError.DUPLICATED_UNIQUE_KEY.message });
-	}
+	} else {
+		const book = await BooksModel.create({
+			...data,
+			/*
+			tratamento do json vindo de um multpart
+			technical: data.technical ? JSON.parse(data.technical) : {},
+			*/
+		});
 
-	const book = await BooksModel.create({
-		...data,
+		return res
+			.status(httpStatusCode.CREATED)
+			.json({ book, message: successStatus.CREATED.message });
+	}
+}
+
+async function uploadCover(req, res) {
+	const poster = req.file?.filename;
+
+	const uploadPoster = await UploadPosterModel.create({
 		poster,
-		technical: data.technical ? JSON.parse(data.technical) : {},
 	});
 
-	return res
-		.status(httpStatusCode.CREATED)
-		.json({ book, message: successStatus.CREATED.message });
+	res.json(uploadPoster);
 }
 
 async function updateBook(req, res) {
 	const { id } = req.params;
 
+	const bookExists = await BooksModel.findById({ _id: id });
+
+	if (!bookExists)
+		res
+			.sendStatus(httpStatusCode.BAD_REQUEST)
+			.json({ message: throwNewError.RESOURCE_NOT_FOUND.message });
+
 	const books = await BooksModel.findByIdAndUpdate({ _id: id }, req.body, {
 		new: true,
 	});
 
-	res.send({ message: "livro atualizado", books });
+	res
+		.status(httpStatusCode.SUCCESS_NO_CONTENT) //{ message: "livro atualizado", books });
+		.json({ message: successStatus.UPDATED_RESOURCE.message, books });
 }
 
 async function removeBook(req, res) {
@@ -91,6 +114,7 @@ module.exports = {
 	getBooks,
 	//getBooksById,
 	createBooks,
+	uploadCover,
 	updateBook,
 	removeBook,
 	listBooksByPublishing,

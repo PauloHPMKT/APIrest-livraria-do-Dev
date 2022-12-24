@@ -6,8 +6,8 @@ const schema = new mongoose.Schema({
 		unique: true,
 	},
 	poster: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "posters",
 	},
 	title: {
 		type: String,
@@ -41,7 +41,7 @@ const schema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	page_number: {
+	pages_number: {
 		type: Number,
 		required: true,
 	},
@@ -54,6 +54,17 @@ const schema = new mongoose.Schema({
 	},
 });
 
-const BooksModel = mongoose.model("books", schema);
+const schemaUpload = new mongoose.Schema({
+	poster: {
+		type: String,
+		required: true,
+	},
+});
 
-module.exports = BooksModel;
+const BooksModel = mongoose.model("books", schema);
+const UploadPosterModel = mongoose.model("posters", schemaUpload);
+
+module.exports = {
+	BooksModel,
+	UploadPosterModel,
+};
