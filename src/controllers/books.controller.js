@@ -97,9 +97,18 @@ async function updateBook(req, res) {
 async function removeBook(req, res) {
 	const { id } = req.params;
 
-	const remove = await BooksModel.deleteOne({ _id: id });
+	const bookExists = await BooksModel.findById({ _id: id });
 
-	res.send({ message: "livro excluido", remove });
+	if (!bookExists)
+		res
+			.sendStatus(httpStatusCode.BAD_REQUEST)
+			.json({ message: throwNewError.RESOURCE_NOT_FOUND.message });
+
+	const removeBook = await BooksModel.deleteOne({ _id: id });
+
+	res
+		.status(httpStatusCode.SUCCESS_NO_CONTENT)
+		.json({ message: successStatus.REMOVED_RESOURCE.message, removeBook });
 }
 
 async function listBooksByPublishing(req, res) {
