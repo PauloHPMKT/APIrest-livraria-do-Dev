@@ -5,17 +5,24 @@ const {
 } = require("../config/constants");
 const BooksModel = require("../models/books.model");
 
-async function getBooks(req, res) {
-	await BooksModel.find()
+function getBooks(req, res) {
+	const { id } = req.params;
+	const bookId = id ? { _id: id } : null;
+
+	BooksModel.find(bookId)
 		.populate("author")
 		.exec((err, books) => {
-			if (err)
+			if (err) {
 				res
 					.status(httpStatusCode.BAD_REQUEST)
 					.json({ message: throwNewError.REQUEST_FAILED.message });
-			else res.status(httpStatusCode.OK).json(books);
+			} else {
+				res.status(httpStatusCode.OK).json({ books });
+			}
 		});
 }
+
+/* funcao de busca por id - ajustes
 
 async function getBooksById(req, res) {
 	const { id } = req.params;
@@ -29,7 +36,7 @@ async function getBooksById(req, res) {
 					.json({ message: throwNewError.REQUEST_FAILED.message });
 			else res.status(httpStatusCode.OK).send(book);
 		});
-}
+}*/
 
 async function createBooks(req, res) {
 	const poster = req.file?.filename;
@@ -82,7 +89,7 @@ async function listBooksByPublishing(req, res) {
 
 module.exports = {
 	getBooks,
-	getBooksById,
+	//getBooksById,
 	createBooks,
 	updateBook,
 	removeBook,
