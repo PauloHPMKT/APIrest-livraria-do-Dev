@@ -54,17 +54,6 @@ const schema = new mongoose.Schema({
 	},
 });
 
-const schemaUpload = new mongoose.Schema({
-	poster: {
-		type: String,
-		required: true,
-	},
-});
-
 const BooksModel = mongoose.model("books", schema);
-const UploadPosterModel = mongoose.model("posters", schemaUpload);
 
-module.exports = {
-	BooksModel,
-	UploadPosterModel,
-};
+module.exports = BooksModel;

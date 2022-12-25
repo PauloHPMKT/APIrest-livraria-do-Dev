@@ -3,14 +3,14 @@ const {
 	httpStatusCode,
 	successStatus,
 } = require("../config/constants");
-const { BooksModel, UploadPosterModel } = require("../models/books.model");
+const { BooksModel } = require("../models/books.model");
 
 function getBooks(req, res) {
 	const { id } = req.params;
 	const bookId = id ? { _id: id } : null;
 
 	BooksModel.find(bookId)
-		.populate("author poster", "name poster")
+		.populate("author poster", "name image_cover")
 		.exec((err, books) => {
 			if (err) {
 				res
@@ -65,16 +65,6 @@ async function createBooks(req, res) {
 	}
 }
 
-async function uploadCover(req, res) {
-	const poster = req.file?.filename;
-
-	const uploadPoster = await UploadPosterModel.create({
-		poster,
-	});
-
-	res.json(uploadPoster);
-}
-
 async function updateBook(req, res) {
 	const { id } = req.params;
 
@@ -123,7 +113,6 @@ module.exports = {
 	getBooks,
 	//getBooksById,
 	createBooks,
-	uploadCover,
 	updateBook,
 	removeBook,
 	listBooksByPublishing,
