@@ -4,18 +4,18 @@ const { UploadPosterModel } = require("../models/upload.model");
 async function uploadCover(req, res) {
 	const image_cover = req.file?.filename;
 
-	const uploadPoster = await UploadPosterModel.create({
+	const uploadCover = await UploadPosterModel.create({
 		image_cover,
 	});
 
-	res.json(uploadPoster);
+	res.json(uploadCover);
 }
 
 //get a cover uploaded
 async function getUploadCover(req, res) {
-	const uploadCover = await UploadPosterModel.find();
+	const uploadedCover = await UploadPosterModel.find();
 
-	res.json(uploadCover);
+	res.json(uploadedCover);
 }
 
 module.exports = {

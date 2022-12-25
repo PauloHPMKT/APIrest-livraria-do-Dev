@@ -23,7 +23,7 @@ db.dbConnect();
 app.use(morgan("dev"));
 
 //set api
-app.set("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
+app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //app.use(cors());

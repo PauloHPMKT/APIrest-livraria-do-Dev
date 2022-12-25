@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
-const schemaUpload = new mongoose.Schema({
+const schema = new mongoose.Schema({
 	image_cover: {
 		type: String,
 		required: true,
 	},
 });
 
-const UploadPosterModel = mongoose.model("posters", schemaUpload);
+const UploadPosterModel = mongoose.model("posters", schema);
 
-module.exports = UploadPosterModel;
+module.exports = {
+	UploadPosterModel,
+};
