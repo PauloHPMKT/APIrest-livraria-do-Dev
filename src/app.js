@@ -1,9 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-//const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const path = require("path");
 const db = require("./db");
+//const cors = require("cors");
 
 //node instance
 const app = express();
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 //app.use(cors());
 
 //setting cors manually
