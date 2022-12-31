@@ -10,6 +10,7 @@ function getBooks(req, res) {
 	const bookId = id ? { _id: id } : null;
 
 	BooksModel.find(bookId)
+		.sort({ createdAt: -1 })
 		.populate("author poster", "name image_cover")
 		.exec((err, books) => {
 			if (err) {
