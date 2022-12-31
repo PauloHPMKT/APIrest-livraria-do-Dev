@@ -1,51 +1,48 @@
-const AuthorsModel = require('../models/authors.model')
+const AuthorsModel = require("../models/authors.model");
 
 async function getAuthors(req, res) {
-    const { id } = req.params
-    const object = id ? { _id: id } : null
-    const author = await AuthorsModel.find(object) 
+	const { id } = req.params;
+	const object = id ? { _id: id } : null;
+	const author = await AuthorsModel.find(object);
 
-    res.send(author)
+	res.send(author);
 }
 
 async function createAuthors(req, res) {
-    const {
-        name,
-        nacionalidade,
-    } = req.body
+	const { name, nacionality, biography } = req.body;
 
-    const author = new AuthorsModel({
-        name,
-        nacionalidade,
-    })
+	const author = new AuthorsModel({
+		name,
+		nacionality,
+		biography,
+	});
 
-    author.save()
+	author.save();
 
-    res.send({ message: 'success' })
+	res.send({ message: "success" });
 }
 
 async function updateAuthors(req, res) {
-    const { id } = req.params
+	const { id } = req.params;
 
-    const authors = await AuthorsModel.findByIdAndUpdate(
-        { _id: id }, req.body, { new: true }
-    )
+	const authors = await AuthorsModel.findByIdAndUpdate({ _id: id }, req.body, {
+		new: true,
+	});
 
-    res.send({ message: 'livro atualizado', authors })
+	res.send({ message: "livro atualizado", authors });
 }
 
 async function removeAuthors(req, res) {
-    const { id } = req.params
+	const { id } = req.params;
 
-    const remove = await AuthorsModel.deleteOne({ _id: id })
+	const remove = await AuthorsModel.deleteOne({ _id: id });
 
-    res.send({ message: 'autor excluido', remove})
+	res.send({ message: "autor excluido", remove });
 }
-
 
 module.exports = {
-    getAuthors,
-    createAuthors,
-    updateAuthors,
-    removeAuthors,
-}
+	getAuthors,
+	createAuthors,
+	updateAuthors,
+	removeAuthors,
+};
