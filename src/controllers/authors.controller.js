@@ -7,10 +7,18 @@ const AuthorsModel = require("../models/authors.model");
 
 async function getAuthors(req, res) {
 	const { id } = req.params;
-	const object = id ? { _id: id } : null;
-	const author = await AuthorsModel.find(object);
+	const authorId = id ? { _id: id } : null;
 
-	res.send(author);
+	const author = await AuthorsModel.find(authorId).sort({ createdAt: -1 });
+
+	if (author) {
+		res.status(httpStatusCode.OK).json({ author });
+	} else {
+		// veirificar tratamento de erro caso a resposta seja === []
+		res
+			.status(httpStatusCode.BAD_REQUEST)
+			.json({ message: throwNewError.REQUEST_FAILED.message });
+	}
 }
 
 async function createAuthors(req, res) {
