@@ -8,6 +8,9 @@ const schema = new mongoose.Schema({
 	poster: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "posters",
+		required: () => {
+			return this.posters ? true : false;
+		},
 	},
 	title: {
 		type: String,
@@ -45,9 +48,9 @@ const schema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	technical: {
+	/*technical: {
 		type: Object,
-	},
+	},*/
 	createdAt: {
 		type: Date,
 		default: Date.now,
