@@ -45,8 +45,6 @@ async function createBooks(req, res) {
 
 	const bookExists = await BooksModel.findOne(data);
 
-	console.log(bookExists);
-
 	if (bookExists) {
 		res
 			.status(httpStatusCode.CONFLICT)
