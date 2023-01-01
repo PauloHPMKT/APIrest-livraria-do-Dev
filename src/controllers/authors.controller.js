@@ -1,3 +1,8 @@
+const {
+	httpStatusCode,
+	throwNewError,
+	successStatus,
+} = require("../config/constants");
 const AuthorsModel = require("../models/authors.model");
 
 async function getAuthors(req, res) {
@@ -9,17 +14,23 @@ async function getAuthors(req, res) {
 }
 
 async function createAuthors(req, res) {
-	const { name, nacionality, biography } = req.body;
+	const { ...data } = req.body;
 
-	const author = new AuthorsModel({
-		name,
-		nacionality,
-		biography,
-	});
+	const authorExists = await AuthorsModel.findOne(data);
 
-	author.save();
+	if (authorExists) {
+		res
+			.status(httpStatusCode.CONFLICT)
+			.json({ error: throwNewError.EXISTANT_REGISTER.message });
+	} else {
+		const author = await AuthorsModel.create({
+			...data,
+		});
 
-	res.send({ message: "success" });
+		return res
+			.status(httpStatusCode.CREATED)
+			.json({ author, message: successStatus.CREATED.message });
+	}
 }
 
 async function updateAuthors(req, res) {
