@@ -29,6 +29,11 @@ module.exports = {
 			code: 409,
 			message: "Conflito de chave única duplicada",
 		},
+		EXISTANT_REGISTER: {
+			name: "EXISTANT_REGISTER",
+			code: 409,
+			message: "Registro já existente",
+		},
 		DUPLICATED_EMAIL: {
 			name: "DUPLICATE_EMAIL",
 			code: 409,
