@@ -6,7 +6,7 @@ const {
 const upload = require("../middlewares/upload-middleware");
 
 //rotas de upload de imagem
-router.get("/books/upload", getUploadCover);
+router.get("/books/upload/:id", getUploadCover);
 router.post("/books/upload", upload.single("image"), uploadCover);
 
 module.exports = router;
