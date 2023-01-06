@@ -13,8 +13,21 @@ async function uploadCover(req, res) {
 
 //get a cover uploaded
 async function getUploadCover(req, res) {
-	const uploadedCover = await UploadPosterModel.find();
+	const { id } = req.params;
+	const uploadedCover = await UploadPosterModel.findOne({ _id: id });
+	// (err, file) => {
+	// 	if (!file || file.length === 0) {
+	// 		return res.status(404).json({ err: "No file exists" });
+	// 	}
 
+	// 	if (["image/jpeg", "image/jpg", "image/png"].includes(file.contentType)) {
+	// 		const readStream = UploadPosterModel.createReadStream(file.filename);
+	// 		readStream.pipe(res);
+	// 	} else {
+	// 		res.status(404).json({ err: "Not an image" });
+	// 	}
+	// }
+	console.log(uploadedCover);
 	res.json(uploadedCover);
 }
 
