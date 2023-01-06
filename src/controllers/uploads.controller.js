@@ -1,3 +1,8 @@
+const {
+	httpStatusCode,
+	throwNewError,
+	successStatus,
+} = require("../config/constants");
 const { UploadPosterModel } = require("../models/upload.model");
 
 //create a cover upload
@@ -31,7 +36,26 @@ async function getUploadCover(req, res) {
 	res.json(uploadedCover);
 }
 
+async function removeUpload(req, res) {
+	const { id } = req.params;
+
+	const uploadedExists = await UploadPosterModel.findById({ _id: id });
+
+	if (!uploadedExists)
+		res
+			.status(httpStatusCode.BAD_REQUEST)
+			.json({ message: throwNewError.RESOURCE_NOT_FOUND.message });
+
+	const removeUploadedPoster = await UploadPosterModel.deleteOne({ _id: id });
+
+	res.status(httpStatusCode.SUCCESS_NO_CONTENT).json({
+		message: successStatus.REMOVED_RESOURCE.message,
+		removeUploadedPoster,
+	});
+}
+
 module.exports = {
-	uploadCover,
 	getUploadCover,
+	uploadCover,
+	removeUpload,
 };
