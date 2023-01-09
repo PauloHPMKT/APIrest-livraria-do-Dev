@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
 			state: String,
 		},
 	},
-	createAt: { type: Date, default: Date.now },
+	createdAt: { type: Date, default: Date.now },
 });
 
 const UsersModel = mongoose.model("users", schema);
