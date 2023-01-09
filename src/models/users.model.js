@@ -1,16 +1,41 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-	name: String,
-	nick_name: "String",
-	sex: String,
-	email: String,
-	password: String,
+	name: {
+		type: "String",
+		required: true,
+	},
+	nick_name: {
+		type: "String",
+		required: true,
+	},
+	sex: {
+		type: "String",
+		required: true,
+	},
+	email: {
+		type: String,
+		required: true,
+		index: true,
+	},
+	password: {
+		type: "String",
+		required: true,
+	},
 	location: {
 		address: {
-			street: String,
-			city: String,
-			state: String,
+			street: {
+				type: "String",
+				required: true,
+			},
+			city: {
+				type: "String",
+				required: true,
+			},
+			state: {
+				type: "String",
+				required: true,
+			},
 		},
 	},
 	createdAt: { type: Date, default: Date.now },
@@ -19,5 +44,3 @@ const schema = new mongoose.Schema({
 const UsersModel = mongoose.model("users", schema);
 
 module.exports = UsersModel;
-
-//https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html - frontend
