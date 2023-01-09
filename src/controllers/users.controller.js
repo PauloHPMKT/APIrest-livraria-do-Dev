@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken");
 async function getUsers(req, res) {
 	const { id } = req.params;
 	const object = id ? { _id: id } : null;
+
 	const user = await UsersModel.find(object)
 		.hint("email_1")
 		.sort({ createdAt: -1 });
