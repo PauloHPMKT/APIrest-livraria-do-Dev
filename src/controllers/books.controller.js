@@ -23,6 +23,30 @@ function getBooks(req, res) {
 		});
 }
 
+async function getPaginatedBooks(req, res) {
+	const { page, limit = 10 } = req.query;
+
+	try {
+		const findBookQuery = await BooksModel.find()
+			.hint("cod_1")
+			.sort({ createdAt: 1 })
+			.limit(limit * 1)
+			.skip((page - 1) * limit);
+
+		const count = await BooksModel.countDocuments();
+
+		res.json({
+			findBookQuery,
+			totalPages: Math.ceil(count / limit),
+			currentPage: page,
+		});
+	} catch (error) {
+		res
+			.status(httpStatusCode.BAD_REQUEST)
+			.json({ error, message: throwNewError.REQUEST_FAILED.message });
+	}
+}
+
 /* funcao de busca por id - ajustes
 
 async function getBooksById(req, res) {
@@ -110,6 +134,7 @@ async function listBooksByPublishing(req, res) {
 
 module.exports = {
 	getBooks,
+	getPaginatedBooks,
 	//getBooksById,
 	createBooks,
 	updateBook,
