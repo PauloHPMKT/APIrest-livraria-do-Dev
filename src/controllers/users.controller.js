@@ -14,7 +14,7 @@ async function getUsers(req, res) {
 
 	const user = await UsersModel.find(object)
 		.hint("email_1")
-		.sort({ createdAt: -1 });
+		.sort({ createdAt: 1 });
 	//verificar abordagem com findById(id, '-password') para omitir a senha do retorno da pesquisa por id
 	if (user) {
 		res.status(httpStatusCode.OK).json({ user });
@@ -22,6 +22,31 @@ async function getUsers(req, res) {
 		res
 			.status(httpStatusCode.BAD_REQUEST)
 			.json({ message: throwNewError.REQUEST_FAILED.message });
+	}
+}
+
+async function getPaginatedUsers(req, res) {
+	const { page, limit = 10 } = req.query;
+	console.log(req.query);
+
+	try {
+		const findUserQuery = await UsersModel.find()
+			.hint("email_1")
+			.sort({ createdAt: 1 })
+			.limit(limit * 1)
+			.skip((page - 1) * limit);
+
+		const count = await UsersModel.countDocuments();
+
+		res.json({
+			findUserQuery,
+			totalPages: Math.ceil(count / limit),
+			currentPage: page,
+		});
+	} catch (error) {
+		res
+			.status(httpStatusCode.BAD_REQUEST)
+			.json({ error, message: throwNewError.REQUEST_FAILED.message });
 	}
 }
 
@@ -169,13 +194,24 @@ async function updateUser(req, res) {
 async function removeUser(req, res) {
 	const { id } = req.params;
 
-	const remove = await UsersModel.deleteOne({ _id: id });
+	const userExists = await UsersModel.find({ _id: id });
 
-	res.send({ message: "usuario excluido", remove });
+	if (!userExists) {
+		res
+			.status(httpStatusCode.BAD_REQUEST)
+			.json({ message: throwNewError.RESOURCE_NOT_FOUND.message });
+	}
+
+	const removeUser = await UsersModel.deleteOne({ _id: id });
+
+	res
+		.status(httpStatusCode.SUCCESS_NO_CONTENT)
+		.json({ message: "usuario excluido", removeUser });
 }
 
 module.exports = {
 	getUsers,
+	getPaginatedUsers,
 	getUserByName,
 	createUser,
 	login,
