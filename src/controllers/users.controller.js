@@ -27,7 +27,6 @@ async function getUsers(req, res) {
 
 async function getPaginatedUsers(req, res) {
 	const { page, limit = 10 } = req.query;
-	console.log(req.query);
 
 	try {
 		const findUserQuery = await UsersModel.find()
