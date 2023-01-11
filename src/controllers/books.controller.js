@@ -47,6 +47,14 @@ async function getPaginatedBooks(req, res) {
 	}
 }
 
+async function listBooksByPublishing(req, res) {
+	const publishing = req.query.editora;
+	//caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
+	BooksModel.find({ editora: publishing }, {}, (err, livros) => {
+		res.status(200).send(livros);
+	});
+}
+
 /* funcao de busca por id - ajustes
 
 async function getBooksById(req, res) {
@@ -124,20 +132,12 @@ async function removeBook(req, res) {
 		.json({ message: successStatus.REMOVED_RESOURCE.message, removeBook });
 }
 
-async function listBooksByPublishing(req, res) {
-	const publishing = req.query.editora;
-	//caminho de busca por query: http://localhost:3000/api/livros/busca/GET?editora=Buzz
-	BooksModel.find({ editora: publishing }, {}, (err, livros) => {
-		res.status(200).send(livros);
-	});
-}
-
 module.exports = {
 	getBooks,
 	getPaginatedBooks,
+	listBooksByPublishing,
 	//getBooksById,
 	createBooks,
 	updateBook,
 	removeBook,
-	listBooksByPublishing,
 };

@@ -39,6 +39,7 @@ async function getPaginatedUsers(req, res) {
 
 		res.json({
 			findUserQuery,
+			count,
 			totalPages: Math.ceil(count / limit),
 			currentPage: page,
 		});
